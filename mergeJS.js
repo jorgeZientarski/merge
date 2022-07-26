@@ -20,7 +20,7 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
         let target = targetObject;
         let merged = mergedObject;
 
-        if(src.jobActivityList != null && target.jobActivityList !=){
+        if(src.jobActivityList != null && target.jobActivityList != null){
             let activities = mergedCollections(src, target);
             merged.jobActivityList = activities;   // Doesn't contain data type
         }
