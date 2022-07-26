@@ -1,5 +1,33 @@
 function mergeJS(sourceObject, targetObject, mergeOptions) {
 
+    let result = null;
+
+    function mergeJobPackages(source, target){
+
+        try{
+            let resNode  = merge(sourceObject, targetObject, mergeOptions);
+            result = mergeJobPackagesCollections(source, target, resNode); //TODO implement mergeJobPackagesCollections.    
+        } 
+        catch (error) {
+            return false; //returns false to trigger error. It needs to be implemented in graph
+        }
+        
+        return result;
+    }
+
+    function mergeJobPackagesCollections(sourceObject, targetObject, mergedObject){
+        let src = sourceObject;
+        let target = targetObject;
+        let merged = mergedObject;
+
+        if(src.jobActivityList != null && target.jobActivityList !=){
+            let activities = mergedCollections(src, target);
+            merged.jobActivityList = activities;   // Doesn't contain data type
+        }
+
+    }
+
+
     function merge(source, target, options) {
         let nullHandling = options.nullHandling;
         let arrayHandling = options.arrayHandling;
