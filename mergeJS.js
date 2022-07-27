@@ -60,7 +60,7 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
             merged.Job.JobNoteList = notes;
         }
 
-        if (srcPkg.Job != null && src.Job.JobCommentList != null && target.Job != null && target.Job.JobCommentList != null) {
+        if (src.Job != null && src.Job.JobCommentList != null && target.Job != null && target.Job.JobCommentList != null) {
             let srcCommentList = src.Job.JobCommentList;
             let targetCommentList = targetPkg.Job.JobCommentList;
             let comments = mergeCollections(srcCommentList, targetCommentList);
@@ -115,8 +115,7 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
                     let difference = targetValue.filter(x => !sourceValue.includes(x));
                     target[key] = [...sourceValue, ...difference];
                 } else if (arrayHandling === 'REPLACE' && typeof source === "object") {
-                    target[key] = sourceValue;
-                }
+                    target[key] = sourceValu
             } else if (sourceValeIsObject) {
                 target[key] = merge(sourceValue, targetValue, options);
             }
