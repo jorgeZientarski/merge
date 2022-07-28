@@ -1,6 +1,5 @@
 function mergeJS(sourceObject, targetObject, mergeOptions) {
 
-    const _ = require('lodash');
     let result = null;
 
     function mergeJobPackages(source, target){
@@ -117,15 +116,61 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
                     target[key] = [...sourceValue, ...difference];
                 } else if (arrayHandling === 'REPLACE' && typeof source === "object") {
                     target[key] = sourceValu
-            } else if (sourceValeIsObject) {
-                target[key] = merge(sourceValue, targetValue, options);
+                } else if (sourceValeIsObject) {
+                    target[key] = merge(sourceValue, targetValue, options);
+                }
             }
+            return target;
         }
-        return target;
     }
 
-    function mergeCollections (src = [], target = []) {
+    function mergeCollections (src = [], target = [], objectType = '') {
+        const _ = require('lodash');
         src = _.uniqWith(src, _.isEqual);
+        target = _.uniqWith(target, _.isEqual);
+    
+        const options = {
+            nullHandling: 'REPLACE',
+            arrayHandling: 'IGNORE'
+        };
+    
+        target.forEach(element => {
+            const find = searchByObject(src, element, objectType);
+            if (find != -1) {
+                src[find] = merge(src[find], element, options);
+                console.log('Merge');
+            } else {
+                src.push(element);
+                console.log('Push');
+            }
+        });
+        return src;
+    }
+
+    function searchByObject(list, element, objectType) {
+        if (objectType === 'JobActivity') {
+            return list.findIndex(x => x.WorkSeqNum === element.WorkSeqNum);
+        } else if (objectType === 'DynamicField') {
+            return list.findIndex(x => (x.DisplaySector === element.DisplaySector)&& (x.Label === element.Label));
+        } else if (objectType === 'JobProduct') {
+            return list.findIndex(x => x.ParentId === element.ParentId);
+        } else if (objectType === 'JobNote') {
+            return list.findIndex(x => x.CommentType === element.CommentType);
+        } else if (objectType === 'JobComment') {
+            return list.findIndex(x => (x.CommentType === element.CommentType) && (x.SeqNumber === element.SeqNumber));
+        } else if (objectType === 'JobEquipment') {
+            return list.findIndex(x => x.Outlet === element.Outlet);
+        } else if (objectType === 'JobReasonCd') {
+            return list.findIndex(x => x.InternalSequence === element.InternalSequence);
+        } else if (objectType === 'RelatedEntity') {
+            return list.findIndex(x => x.Id === element.Id);
+        } else if (objectType === 'SkillMember') {
+            return list.findIndex(x => x.SkillMember === element.SkillMember);
+        } else if (objectType === 'RelatedParty') {
+            return list.findIndex(x => x.Role === element.Role);
+        } else {
+            throw 'ObjectType not defined';
+        }
     }
 
     return merge(sourceObject, targetObject, mergeOptions); // modify
