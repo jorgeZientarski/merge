@@ -135,7 +135,7 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
         };
     
         target.forEach(element => {
-            const find = searchByObject(src, element, objectType);
+            const find = searchIndexByObjectType(src, element, objectType);
             if (find != -1) {
                 src[find] = merge(src[find], element, options);
                 console.log('Merge');
