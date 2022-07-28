@@ -147,7 +147,7 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
         return src;
     }
 
-    function searchByObject(list, element, objectType) {
+    function searchIndexByObjectType(list, element, objectType) {
         if (objectType === 'JobActivity') {
             return list.findIndex(x => x.WorkSeqNum === element.WorkSeqNum);
         } else if (objectType === 'DynamicField') {
