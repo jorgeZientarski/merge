@@ -1,5 +1,6 @@
 function mergeJS(sourceObject, targetObject, mergeOptions) {
 
+    const _ = require('lodash');
     let result = null;
 
     function mergeJobPackages(source, target){
@@ -122,6 +123,10 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
             }
         }
         return target;
+    }
+
+    function mergeCollections (src = [], target = []) {
+        src = _.uniqWith(src, _.isEqual);
     }
 
     return merge(sourceObject, targetObject, mergeOptions); // modify
