@@ -1,101 +1,109 @@
-function mergeJS(sourceObject, targetObject, mergeOptions) {
+const { forEach } = require('lodash');
+let src = require('./src.json');
+let target = require('./target.json');
 
-    let result = null;
+console.log(mergeJobPackages(src, target));
 
-    function mergeJobPackages(source, target){
+    function mergeJobPackages(src, target) {
+        let result = null;
+        let resNode;
+        const mergeOptions = {
+            nullHandling: 'REPLACE',
+            arrayHandling: 'MERGE'
+        };
 
-        try{
-            let resNode  = merge(sourceObject, targetObject, mergeOptions);
-            result = mergeJobPackagesCollections(source, target, resNode); //TODO implement mergeJobPackagesCollections.    
-        } 
-        catch (error) {
-            return false; //returns false to trigger error. It needs to be implemented in graph
+        try {
+            resNode = merge(src, target, mergeOptions);      
+            result = mergeJobPackagesCollections(src, target, resNode); 
         }
-        
+        catch (error) {
+            return error;
+        }
+
         return result;
     }
 
-    function mergeJobPackagesCollections(sourceObject, targetObject, mergedObject){
+    function mergeJobPackagesCollections(sourceObject, targetObject, mergedObject) {
         let src = sourceObject;
         let target = targetObject;
         let merged = mergedObject;
 
-        if (src.JobActivityList != null && target.JobActivityList != null){
-            let activities = mergedCollections(src, target);
-            merged.JobActivityList = activities;   // Doesn't contain data type
+        if (src.JobActivityList != null && target.JobActivityList != null) {
+            let activities = mergeCollections(src.JobActivityList, target.JobActivityList, 'JobActivity');
+            merged.JobActivityList = activities;  
         }
 
-        if (src.Job != null && target.Job != null && src.Job.JobDynamicFieldList != null && target.JobDynamicFieldList){
+        if (src.Job != null && target.Job != null && src.Job.JobDynamicFieldList != null && target.JobDynamicFieldList) {
             let srcDynamicFields = src.Job.JobDynamicFieldList;
             let targetDynamicFields = target.Job.JobDynamicFieldList;
-            let dynFields = mergeCollections(srcDynamicFields, targetDynamicFields);
+            let dynFields = mergeCollections(srcDynamicFields, targetDynamicFields, 'DynamicField');
             merged.Job.JobDynamicFieldList = dynFields;
         }
 
-        if (src.Job != null && target.Job != null && src.Job.BREDynamicFieldList != null && target.Job.BREDynamicFieldList != null){
+        if (src.Job != null && target.Job != null && src.Job.BREDynamicFieldList != null && target.Job.BREDynamicFieldList != null) {
             let srcBreFields = src.Job.BREDynamicFieldList;
             let targetBreFields = target.Job.BREDynamicFieldList;
-            let breFields = mergeCollections(srcBreFields, targetBreFields);
+            let breFields = mergeCollections(srcBreFields, targetBreFields, 'DynamicField');
             merged.Job.BREDynamicFieldList = breFields;
+            merged.Job.BREDynamicFieldList.forEach(element => console.log(element));
         }
 
         if (src.JobLocation != null && target.JobLocation != null & src.JobLocation.LocationDynamicFieldList != null && target.JobLocation.LocationDynamicFieldList != null) {
             let srcLocFields = src.JobLocation.LocationDynamicFieldList;
             let targetLocFields = target.JobLocation.LocationDynamicFieldList;
-            let locFields = mergeCollections(srcLocFields, targetLocFields);
+            let locFields = mergeCollections(srcLocFields, targetLocFields, 'DynamicField');
             merged.JobLocation.LocationDynamicFieldList = locFields;
         }
 
         if (src.JobProductList != null && target.JobProductList != null) {
             let srcProductList = src.JobProductList;
             let targetProductList = target.JobProductList;
-            let products = mergeCollections(srcProductList, targetProductList);
+            let products = mergeCollections(srcProductList, targetProductList, 'JobProduct');
             merged.JobProductList.Products = products;
         }
 
         if (src.Job != null && src.Job.JobNoteList != null && target.Job != null && target.Job.JobNoteList != null) {
             let srcNoteList = src.Job.JobNoteList;
             let tartgetNoteList = target.Job.JobNoteList;
-            let notes = mergeCollections(srcNoteList, tartgetNoteList);
+            let notes = mergeCollections(srcNoteList, tartgetNoteList, 'JobNote');
             merged.Job.JobNoteList = notes;
         }
 
         if (src.Job != null && src.Job.JobCommentList != null && target.Job != null && target.Job.JobCommentList != null) {
             let srcCommentList = src.Job.JobCommentList;
             let targetCommentList = targetPkg.Job.JobCommentList;
-            let comments = mergeCollections(srcCommentList, targetCommentList);
+            let comments = mergeCollections(srcCommentList, targetCommentList, 'JobComment');
             mergedPkg.Job.JobCommentList = comments;
         }
 
         if (src.JobEquipmentList != null && target.JobEquipmentList != null) {
-            let equipments = mergeCollections(src.JobEquipmentList, target.getJobEquipmentList);
+            let equipments = mergeCollections(src.JobEquipmentList, target.JobEquipmentList, 'JobEquipment');
             merged.JobEquipmentList = equipments;
         }
 
         if (src.Job != null && src.Job.JobReasonCdList != null && target.Job != null && target.Job.JobReasonCdList != null) {
-            let reasonCodes = mergeCollections(src.Job.JobReasonCdList, target.Job.JobReasonCdList);
+            let reasonCodes = mergeCollections(src.Job.JobReasonCdList, target.Job.JobReasonCdList, 'JobReasonCd');
             merged.Job.JobReasonCdList = reasonCodes;
         }
 
         if (src.RelatedEntityList != null && target.RelatedEntityList != null) {
-            let relatedEntities = mergeCollections(src.RelatedEntityList, target.RelatedEntityList);
+            let relatedEntities = mergeCollections(src.RelatedEntityList, target.RelatedEntityList, 'RelatedEntity');
             merged.RelatedEntityList = relatedEntities;
         }
 
         if (src.SkillMemberList != null && target.SkillMemberList != null) {
-            let skillMembers = mergeCollections(src.SkillMemberList, target.SkillMemberList);
+            let skillMembers = mergeCollections(src.SkillMemberList, target.SkillMemberList, 'SkillMember');
             merged.SkillMemberList = skillMembers;
         }
 
         if (src.RelatedPartyList != null && target.RelatedPartyList != null) {
-            let relatedParties = mergeCollections(src.RelatedPartyList, target.RelatedPartyList);
+            let relatedParties = mergeCollections(src.RelatedPartyList, target.RelatedPartyList, 'RelatedParty');
             merged.RelatedPartyList = relatedParties;
         }
 
         return merged;
 
     }
-
 
     function merge(source, target, options) {
         let nullHandling = options.nullHandling;
@@ -109,12 +117,12 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
             } else if (nullHandling === 'REPLACE' && !targetValue) {
                 target[key] = sourceValue;
             } else if (bothValuesAreArrays) {
-                if (arrayHandling === 'CONCATENATE' && typeof source === "object") {
+                if (arrayHandling === 'CONCATENATE') {
                     target[key] = [...sourceValue, ...targetValue];
-                } else if (arrayHandling === 'MERGE' && typeof source === "object") {
+                } else if (arrayHandling === 'MERGE') {
                     let difference = targetValue.filter(x => !sourceValue.includes(x));
                     target[key] = [...sourceValue, ...difference];
-                } else if (arrayHandling === 'REPLACE' && typeof source === "object") {
+                } else if (arrayHandling === 'REPLACE') {
                     target[key] = sourceValu
                 } else if (sourceValeIsObject) {
                     target[key] = merge(sourceValue, targetValue, options);
@@ -124,24 +132,24 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
         }
     }
 
-    function mergeCollections (src = [], target = [], objectType = '') {
+    function mergeCollections(src = [], target = [], objectType = '') {
         const _ = require('lodash');
         src = _.uniqWith(src, _.isEqual);
         target = _.uniqWith(target, _.isEqual);
-    
+
         const options = {
             nullHandling: 'REPLACE',
             arrayHandling: 'IGNORE'
         };
-    
+
         target.forEach(element => {
             const find = searchIndexByObjectType(src, element, objectType);
             if (find != -1) {
                 src[find] = merge(src[find], element, options);
-                console.log('Merge');
+                //console.log('Merge');
             } else {
                 src.push(element);
-                console.log('Push');
+                //console.log('Push');
             }
         });
         return src;
@@ -151,7 +159,7 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
         if (objectType === 'JobActivity') {
             return list.findIndex(x => x.WorkSeqNum === element.WorkSeqNum);
         } else if (objectType === 'DynamicField') {
-            return list.findIndex(x => (x.DisplaySector === element.DisplaySector)&& (x.Label === element.Label));
+            return list.findIndex(x => (x.DisplaySector === element.DisplaySector) && (x.Label === element.Label));
         } else if (objectType === 'JobProduct') {
             return list.findIndex(x => x.ParentId === element.ParentId);
         } else if (objectType === 'JobNote') {
@@ -167,12 +175,8 @@ function mergeJS(sourceObject, targetObject, mergeOptions) {
         } else if (objectType === 'SkillMember') {
             return list.findIndex(x => x.SkillMember === element.SkillMember);
         } else if (objectType === 'RelatedParty') {
-            return list.findIndex(x => x.Role === element.Role);
+            return list.findIndex(x => x.Role === element.Role && (x.Id === element.Id));
         } else {
             throw 'ObjectType not defined';
         }
     }
-
-    return merge(sourceObject, targetObject, mergeOptions); // modify
-
-}

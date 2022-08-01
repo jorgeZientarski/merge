@@ -1,0 +1,85 @@
+{
+    "Job": {
+        "BREDynamicFieldList": [
+            {
+                "DisplayOrder": 1,
+                "DisplaySector": "JobSector",
+                "Label": "externalId",
+                "Value": "xx002"
+            }
+        ]
+    },
+    "WorkOrderNum": "J0000000000000000070",
+    "SkillMemberList": [
+        {
+            "SkillMember": "s1"
+        },
+        {
+            "SkillMember":"s2"
+        },
+        {
+            "SkillMember":"s4"
+        }
+    ],
+    "JobCustomer": {
+        "VipCd": "Q",
+        "EmailAddr": "isiah.bowers@csgi.com"
+    },
+    "JobActivityList": [
+        {
+            "StatusCd": null,
+            "Outlet": null,
+            "AddSerialNum": null,
+            "WorkSeqNum": "1",
+            "ActivityName": "TVActivity1",
+            "RemoveSerialNum": null,
+            "ActivityCd": null,
+            "JobActivitySubList": [],
+            "ActivityId": "1"
+        },
+        {
+            "StatusCd": null,
+            "Outlet": null,
+            "AddSerialNum": null,
+            "WorkSeqNum": "3",
+            "ActivityName": "TVActivity1",
+            "RemoveSerialNum": null,
+            "ActivityCd": null,
+            "JobActivitySubList": [],
+            "ActivityId": "3"
+        }
+
+    ],
+    "RelatedPartyList": [
+        {
+            "Customer": {
+                "AccountId": "001q000001BUNhBAAX",
+                "Category": "FOP",
+                "CustomerId": "3000000000110001",
+                "CustomerType": "RES",
+                "EmailAddr": "pepe@pepe.com",
+                "FirstName": "Rodrigo",
+                "HomePhoneNum": "1145756633",
+                "IdentificationId": "426",
+                "IdentificationType": "DNI",
+                "LastName": "Mendez"
+            },
+            "Id": "3000000000110001",
+            "Name": "Admin",
+            "ReferredType": "Individual",
+            "Role": "Admin"
+        }
+    ],
+    "JobEquipmentList": [
+        {
+            "ActionCd": "ADD",
+            "EquipModelCd": "Cable Modem Wifi",
+            "EquipStatusCd": "N",
+            "EquipTypeCd": "Cablemodem",
+            "Outlet": "d5436b55",
+            "OwnerCd": "R",
+            "ParentId": "c6319a34",
+            "SerialNum": "PADJ004303866"
+        }
+    ]
+}

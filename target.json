@@ -1,0 +1,92 @@
+{
+    "WorkOrderNum": "J0000000000000000070",
+    "JobEquipmentList": [
+        {
+            "ActionCd": "ADD",
+            "EquipModelCd": "Cable Modem Wifi",
+            "EquipStatusCd": "N",
+            "EquipTypeCd": "Cablemodem",
+            "Outlet": "d5436b55",
+            "OwnerCd": "R",
+            "ParentId": "c6319a34",
+            "SerialNum": "PADJ004303866"
+        },
+        {
+            "ActionCd": "ADD",
+            "EquipModelCd": "Full IP",
+            "EquipStatusCd": "N",
+            "EquipTypeCd": "Decodificador",
+            "Outlet": "d5436b56",
+            "OwnerCd": "R",
+            "ParentId": "c6319a35",
+            "SerialNum": "*"
+        }
+    ],
+    "SkillMemberList": [
+        {
+            "SkillMember":"s3"
+        }
+    ],
+    "JobActivityList": [
+        {
+            "StatusCd": null,
+            "Outlet": null,
+            "AddSerialNum": null,
+            "WorkSeqNum": "2",
+            "ActivityName": "TVActivity1",
+            "RemoveSerialNum": null,
+            "ActivityCd": null,
+            "JobActivitySubList": [],
+            "ActivityId": "2"
+        }
+    ],
+
+    "Job": {
+        "BREDynamicFieldList": [
+            {
+                "DisplayOrder": 2,
+                "DisplaySector": "JobSector3",
+                "Label": "externalId",
+                "Value": "xx002"
+            }
+        ]
+    },
+    "RelatedPartyList": [
+        {
+            "Customer": {
+                "AccountId": "001q000001BUNhBAAX",
+                "Category": "FOP",
+                "CustomerId": "3000000000110001",
+                "CustomerType": "RES",
+                "EmailAddr": "pepe@pepe.com",
+                "FirstName": "Rodrigo",
+                "HomePhoneNum": "1145756633",
+                "IdentificationId": "426",
+                "IdentificationType": "DNI",
+                "LastName": "Mendez"
+            },
+            "Id": "3000000000110001",
+            "Name": "Admin",
+            "ReferredType": "Individual",
+            "Role": "Admin"
+        },
+        {
+            "Customer": {
+                "AccountId": "001q000001BUNhBAAX",
+                "Category": "FOP",
+                "CustomerId": "3000000000110002",
+                "CustomerType": "RES",
+                "EmailAddr": "pepe@pepe.com",
+                "FirstName": "Rodrigo",
+                "HomePhoneNum": "1145756633",
+                "IdentificationId": "426",
+                "IdentificationType": "DNI",
+                "LastName": "Mendez"
+            },
+            "Id": "3000000000110002",
+            "Name": "Admin",
+            "ReferredType": "Individual",
+            "Role": "Admin"
+        }
+    ]
+}
